@@ -18,6 +18,7 @@ WORKDIR /root
 RUN yum install -y openssl iproute && \
     rpm -i $OVSRPM && \
     rm -v $OVSRPM && \
+    yum clean all && \
     mkdir -p /var/run/openvswitch/ && \
     mkdir /dev/net && \
     mknod /dev/net/tun c 10 200
