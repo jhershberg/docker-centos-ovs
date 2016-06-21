@@ -1,6 +1,8 @@
 FROM centos:latest
 ENV OVS_VERSION 2.5.1
 ENV OVS_RPM openvswitch-${OVS_VERSION}-1.fc22.x86_64.rpm
+ENV OVS_TARBALL openvswitch-${OVS_VERSION}.tar.gz
+
 # Configure supervisord
 RUN mkdir -p /var/log/supervisor/
 ADD supervisord.conf /etc/
@@ -17,6 +19,7 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 
 # Get Open vSwitch
 ADD $OVS_RPM /root
+ADD $OVS_TARBALL /root
 WORKDIR /root
 RUN yum install -y openssl iproute && \
     rpm -i $OVS_RPM && \
@@ -24,7 +27,11 @@ RUN yum install -y openssl iproute && \
     yum -v clean all && \
     mkdir -p /var/run/openvswitch/ && \
     mkdir /dev/net && \
-    mknod /dev/net/tun c 10 200
+    mknod /dev/net/tun c 10 200 && \
+    cd openvswitch-${OVS_VERSION}/python/ &&\
+    python setup.py install && \
+    cd /root && \
+    rm -fvr $OVS_TARBALL openvswitch-${OVS_VERSION}/
 ADD configure-ovs.sh /usr/share/openvswitch/
 ADD mk-net-dev.sh /usr/share/openvswitch/
 # Create the database
