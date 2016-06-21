@@ -1,8 +1,10 @@
 FROM centos:latest
-ENV OVSRPM openvswitch-2.5.1-1.fc22.x86_64.rpm
+ENV OVS_VERSION 2.5.1
+ENV OVS_RPM openvswitch-${OVS_VERSION}-1.fc22.x86_64.rpm
 # Configure supervisord
 RUN mkdir -p /var/log/supervisor/
 ADD supervisord.conf /etc/
+
 # Install supervisor_stdout
 WORKDIR /opt
 RUN mkdir -p /var/log/supervisor/
@@ -12,13 +14,14 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
     pip install setuptools && \
     pip install supervisor && \
     pip install supervisor-stdout
+
 # Get Open vSwitch
-ADD $OVSRPM /root
+ADD $OVS_RPM /root
 WORKDIR /root
 RUN yum install -y openssl iproute && \
-    rpm -i $OVSRPM && \
-    rm -v $OVSRPM && \
-    yum clean all && \
+    rpm -i $OVS_RPM && \
+    rm -v $OVS_RPM && \
+    yum -v clean all && \
     mkdir -p /var/run/openvswitch/ && \
     mkdir /dev/net && \
     mknod /dev/net/tun c 10 200
