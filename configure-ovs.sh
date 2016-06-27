@@ -14,3 +14,11 @@ ovs-vsctl --no-wait -- set Open_vSwitch . external-ids:system-id=`cat /proc/sys/
 ovs-vsctl --no-wait -- set-manager ptcp:6640
 ovs-appctl -t ovsdb-server ovsdb-server/add-remote db:Open_vSwitch,Open_vSwitch,manager_options
 
+# Config for hwvtep
+ovs-vsctl add-br br-vtep
+ovs-vsctl add-port br-vtep eth0
+vtep-ctl add-ps br-vtep
+vtep-ctl add-port br-vtep eth0
+vtep-ctl set Physical_Switch br-vtep tunnel_ips=192.168.254.20
+vtep-ctl set-manager ptcp:6640
+
