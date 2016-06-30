@@ -1,5 +1,5 @@
 FROM centos:latest
-ENV OVS_VERSION 2.4.0
+ENV OVS_VERSION 2.5.0
 ENV OVS_RPM openvswitch-${OVS_VERSION}-1.fc23.x86_64.rpm
 ENV OVS_TARBALL openvswitch-${OVS_VERSION}.tar.gz
 # Configure supervisord
