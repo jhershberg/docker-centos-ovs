@@ -7,7 +7,7 @@ for creating a docker image that runs OpenVSwitch on CentOS.
 2. Place the resulting RPM in in this directory
 3. Edit the OVSRPM environment variable in the Dockerfile to be the name of your RPM
 4. Run docker build on this directory
-5. To run the docker image say, "sudo docker run -itd --cap-add NET_ADMIN -p 6641:6640 name_of_your_image"
+5. To run the docker image say, "sudo docker run -itd --cap-add NET_ADMIN name_of_your_image"
 
 ## Credits
 This work is largely based on that of Dave Tucker: https://github.com/dave-tucker/docker-ovs 
