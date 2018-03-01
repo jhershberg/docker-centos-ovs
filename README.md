@@ -15,6 +15,7 @@ the following four forms:
  * MODE=ptcp - except passive manager tcp conntections 
  * MODE=tcp - set the manager and controller IPs to the value of the default route
  * MODE=tcp:<IP> - set the manager and controller IPs to the IP specified. Generally speaking, you will not need this option
+
 To run the docker image say, "sudo docker run -itd -e MODE=none --cap-add NET_ADMIN name_of_your_image"
 
 ## Credits
